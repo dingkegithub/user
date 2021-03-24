@@ -1,0 +1,6 @@
+FROM golang:latest
+WORKDIR /root/user
+COPY . /root/user/
+RUN go env -w GOPROXY=https://goproxy.cn,direct
+RUN mkdir -p /root/user/bin; go build -o /root/user/bin/user-srv cmd/main.go
+ENTRYPOINT ./bin/user-srv -mysql.addr $mysqlAddr -redis.addr $redisAddr
